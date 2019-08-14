@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    *{margin: 0;padding: 0;}
+    section{width: 500px;height: 500px;background: url(images/GIF.jpg) no-repeat center;
+            background-size: 100%; transition: 1s;
+            position: fixed;left: -100px;right:0;top: 0;bottom: 0;margin: auto;
+            transform-style: preserve-3d;/* 形成一个立体舞台 */
+            transform: rotateX(20deg) rotateY(30deg)}
+    div{width: 500px;height: 500px;text-align: center;line-height: 500px;opacity: 0.5;transition: 1s;
+     font-size: 200px;color:white;font-weight: 900;position: absolute;/*让所有的div层叠在一起  */}
+    section:hover div:nth-child(1){background: red;      
+                                 transform: translateZ(500px)      } 
+    section:hover div:nth-child(2){background: orange;   
+                                 transform: rotateY(180deg)}
+    section:hover div:nth-child(3){background: yellow;
+                                 transform-origin:center top;transform: rotateX(90deg)}
+    section:hover div:nth-child(4){background: blue;   
+                                 transform-origin:center bottom;transform: rotateX(-90deg)  }
+    section:hover div:nth-child(5){background: cyan;   
+                                 transform-origin:left center;transform: rotateY(-90deg) }
+    section:hover div:nth-child(6){background: purple; 
+                                 transform-origin: right center;transform: rotateY(90deg)  }
+
+    </style>
+</head>
+<body>
+    <h2>请将鼠标移动到图片上</h2>
+    <section>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </section>
+</body>
+</html>
+<!-- 思路：1、div全部层叠，然后第一个div向z轴+向移动
+          2、其他的div分别变换ta的变形原点，让div绕着变形原点转动 -->

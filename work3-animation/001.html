@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        section{width: 500px; height: 300px;position: relative;
+            margin-top:100px;margin-left:350px ;border-bottom: 2px solid red;}
+        div{width: 120px;height: 50px;transition: 2s;
+            position: absolute;bottom: 15px;left: 110px;transform-origin:right center;}
+        section:hover div:nth-child(1){transform: rotate(180deg);background:purple;}
+        section:hover div:nth-child(2){transform: rotate(154.3deg);background:blue;}
+        section:hover div:nth-child(3){transform: rotate(128.6deg);background:cyan;}
+        section:hover div:nth-child(4){transform: rotate(102.9deg);background:green;}
+        section:hover div:nth-child(5){transform: rotate(77.2deg);background:yellow;}
+        section:hover div:nth-child(6){transform: rotate(51.5deg);background:orange;}
+        section:hover div:nth-child(7){transform: rotate(25.7deg);background:red;}
+
+    </style>
+</head>
+<body>
+    <h2>请将鼠标移动到屏幕中间</h2>
+    <section>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </section>
+</body>
+</html>
+<!-- 变形原点：transform-origin-->

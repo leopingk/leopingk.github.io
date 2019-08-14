@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <form action="" class="login-form">
+        <h1>Login</h1>
+        <div class="txtb">
+            <input type="text" required minlength="5" value="" autocomplete="password">
+            <span data-placeholder='用户名:'></span>
+        </div>
+        <div class="txtb">
+            <input old-password type="password" minlength="6" maxlength="12" value="" autocomplete="password">
+            <span data-placeholder='密码:'></span>
+        </div>
+        <div class="txtb">
+            <input new-password type="password" minlength="6" maxlength="12" value="" autocomplete="current-password">
+            <span data-placeholder='确认密码:'></span>
+        </div>
+        <a class="logbtna" href="" style="z-index: 10"><input type="submit" value="登录" class="logbtn"></a>
+        <div class="bottom-text">
+            没有账号? <button id="SingUp"><a href="#">注册</a></button>
+        </div>
+    </form>
+    <!-- <input type="submit" name="submit" onclick="location='index.html'"> 测试按钮 -->
+    <script type='text/javascript'>
+        $('.txtb input').on('focus', function () {
+            $(this).addClass("focus");
+        })
+        $('.txtb input').on('blur', function () {
+            if ($(this).val() == '') {
+                $(this).removeClass("focus");
+            }
+        })
+        /* 让确认密码 初始隐藏点击后再次出现，同时隐藏注册按钮，并将登录按钮改为注册按钮，且清空里面的value*/
+        $('.txtb:eq(2)').hide()
+        $('#SingUp').click(function () {
+            $('.txtb:eq(2)').show(600)
+            $('.bottom-text').hide(200)
+            $('.txtb:eq(0)>span').attr("data-placeholder", "新用户名")
+            $('.txtb>input').val("")
+            $('.logbtn').val('注册')
+        })
+        $('.logbtna').click(function () {
+            var username = $(':text').val()
+            var oldPassword = $('[old-password]').val()
+            var newPassword = $('[new-password]').val()
+            // console.log("用户名:" + username)
+            // console.log("密码:" + oldPassword)
+            // console.log("确认密码:" + newPassword)
+            var user = "leoping", pad = '147258'
+            if (user == username && pad == oldPassword) {
+                $('.logbtn').attr("onclick", "location='index.html'")
+                /* 添加一个定时器，判断进入立即执行*/
+                    $('.logbtn').click()
+            } else {
+                alert('输入错误，请重新输入！')
+            }
+        })
+    </script>
+</body>
+
+</html>
