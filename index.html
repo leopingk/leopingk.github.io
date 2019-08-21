@@ -2,505 +2,1781 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-		}
-
-		.sidebar-menu #menu .nav {
-			flex-direction: column;
-			/* overflow-y: auto; */
-			height: 600px;
-		}
-
-		.sidebar-menu #menu .nav>li {
-			flex-shrink: 0;
-		}
-
-		#btn1 {
-			position: fixed;
-			left: 220px;
-			top: 100px;
-			z-index: 13;
-			color: #3990ca;
-			cursor: pointer;
-		}
-
-		#btn2 {
-			position: fixed;
-			left: 0px;
-			top: 100px;
-			z-index: 13;
-			color: #3990ca;
-			cursor: pointer;
-		}
-
-		#head-blanks {
-			width: 240px;
-			height: 60px;
-			float: left;
-			background: #27303f;
-		}
-
-		#left-blanks {
-			width: 240px;
-			height: 100%;
-			position: absolute;
-			top: 60px;
-			background: #F8F8F8;
-		}
-
-		#left-blacks>pre> {
-			white-space: pre-wrap;
-
-		}
-
-		.bk-avatar>img {
-			transform: translate(75px)
-		}
-
-		.eyes {
-			background-image: linear-gradient(120deg, #3498db, #8e44ad);
-			position: absolute;
-			bottom: -180px;
-			width: 240px;
-			height: 180px;
-		}
-
-		.eye {
-			width: 100px;
-			height: 60px;
-			background: #c5b7b7;
-			display: inline-block;
-			margin: 60px 8px 20px 8px;
-			border-radius: 50%;
-			position: relative;
-			overflow: hidden;
-		}
-
-		.ball {
-			width: 30px;
-			height: 30px;
-			background: #050505cb;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			border-radius: 50%;
-			border: 5px solid #746161;
-		}
-
-		/* 设想的是将iframe标签里面引入的html导入到showinner*/
-		/* #showinerr */
-		#showinner>iframe,#oldshowinner>iframe{
-			width: 90%;
-			height: 92%;
-			position: absolute;
-			left: 240px;
-			top: 60px;
-		}
-	</style>
-
-	<link rel="shortcut icon" href="assets/ico/favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="iconfont/iconfont.css">
-	<!-- Vendor CSS-->
-	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css" />
-	<!-- Plugins CSS-->
-	<link rel="stylesheet" href="assets/plugins/bootkit/css/bootkit.css" />
-	<!-- Theme CSS -->
-	<!-- Page CSS -->
-	<link rel="stylesheet" href="assets/css/style.css" />
-	<link rel="stylesheet" href="css/footerstyle.css">
-	<link rel="stylesheet" href="css/common.css">
-	<link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
-	<!-- end: CSS file-->
-
-	<link media="screen" rel="stylesheet" href="css/demo.css" />
-	<script type="text/javascript" src="jquery-1.7.1.min.js"></script>
-	<script type='text/javascript' src='js/topnavmenu.js'></script>
-	<script type='text/javascript'>
-		$(document).ready(function () {
-			$(".nav-parent>a").click(function () {
-				// $(this).next().height((($(this).next().children().length)*($(this).next().children().height()-'px'))+'px');
-				$(this).next().slideToggle("normal", "linear");
-				$('#showinner').hide();/* 这个是为了点击一级菜单时让showinner不再显示 */
-				$(this).parent().siblings().children("ul").slideUp();
-			});
-			$('#btn2').hide()
-			// $('.sidebar')
-			$('#btn1').click(function () {
-				$('.sidebar').animate({ width: 0 }, 500);
-
-				$(this).hide(100)
-				$('#btn2').show(700)
-			})
-			$('#btn2').click(function () {
-				$('.sidebar').animate({ width: 240 }, 500);
-				$(this).hide(100)
-				$('#btn1').show(700)
-
-			})
-			// 默认让showinner 隐藏->点击出现再点击隐藏
-			$('#showinner').show()
-			$('.nav-children>li>a').click(function () {
-				var thisName = $(this).attr('name')
-				// console.log(thisName)-->获取a标签里面的name（存着对应的src路径，将其天教导iframe中）
-				$('#showinner>iframe').attr('src', thisName)
-				$('#showinner').show(500)
-				$('#oldshowinner>iframe').hide()
-				$('#showinner>iframe').remove('src')
-			})
-			$('.navigation-down-inner>dl>dd>a').click(function () {
-				var thisName = $(this).attr('name')
-				// console.log(thisName)-->获取a标签里面的name（存着对应的src路径，将其天教导iframe中）
-				$('#showinner>iframe').attr('src', thisName)
-				$('#showinner').show(500)
-				$('#showinner>iframe').remove('src')
-			})
-		})
-	</script>
-	<script type='text/javascript'>
-		window.onload = function () {
-			var balls = document.getElementsByClassName("ball");
-			// console.log(balls)
-			document.documentElement.onmousemove = function () {
-				var x = event.clientX * 100 / window.innerWidth + "%";
-				var y = event.clientY * 100 / window.innerHeight + "%";
-				for (var i = 0; i < 2; i++) {
-					balls[i].style.left = x;
-					balls[i].style.top = y;
-					balls[i].style.transform = "translate(-" + x + ",-" + y + ")";
-				}
-			}
-		}
-	</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>华为商城</title>
+    <!-- 公共样式 -->
+    <link rel="stylesheet" href="css/common.css">
+    <!-- 主体样式 -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- footer -->
+    <link rel="stylesheet" href="css/footerstyle.css">
 </head>
 
 <body>
-	<div><a id="btn1" class="iconfont icon-cebianlanshousuo"></a></div>
-	<div><a id="btn2" class="iconfont icon-cebianlandanchu"></a></div>
-	<div id="head-blanks"></div><!-- 用来填补左上角空缺 -->
-	<div id="left-blanks">
-		<pre><code>
-	西江月·且对东君痛饮
-	   [宋] 辛弃疾
-  且对东君痛饮，  莫教华发空催。
+    <!-- 顶部 板块-->
+    <header id="header" class="border-bottom d-none d-md-block">
+        <div class="container ">
+            <div class="row text-center">
+                <div class="col-md-2 border-right">
+                    <a href="javascript:;" class="d-block position-relative" id="headerleft">
+                        <i class="fa fa-mobile" aria-hidden="true"></i>
+                        手机App
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                        <img src="images/weixin1.png" alt="" class="img-fluid position-absolute d-none" id="weixin">
+                    </a>
+                </div>
+                <div class="col-md-6 border-right">
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    4006-86-4006(服务时间9:00~21:00)
+                </div>
+                <div class="col-md-2 border-right">
+                    <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+                    <a href="">常见问题</a>
+                </div>
+                <div class="col-md-2">
+                    <a href="demo/index.html" class="mr-3" target="_blank">登录</a>
+                    <a href="login/login.html" target="_blank">注册</a>
+                </div>
 
-  琼瑰千字已盈怀。消得津头一醉。 
+            </div>
+        </div>
+    </header>
+    <!-- 导航板块 -->
+    <nav class="navbar navbar-expand-md  border-bottom navbar-light bg-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand pl-2" href="javasvript:;" style="color: red">
+                <img src="images/huawei.png" alt="" class="d-inline-block align-center" width="35px">
+                华为商城</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto ">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="#">首页<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            华为官网
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            荣耀官网
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            花粉俱乐部
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            优购码
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            企业购
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="#">Select Region</a>
+                    </li>
+                </ul>
+                <!-- <form class="form-inline my-2 my-lg-0"> 这是一个搜索框
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-primary  my-2 my-sm-0 " type="submit"
+                        style="right:px;top:0;">Search</button>
+                </form> -->
+            </div>
+        </div>
+    </nav>
+    <!-- 轮播图板块 -->
+    <div id="carouselExampleCaptions" class="carousel slide carousel-fade carousel" data-ride="carousel"
+        data-interval="1600">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <a href="javascript:;" class="d-none d-md-block banner_item"
+                    style="background-image:url('images/banner/banner1.jpg')"></a><!-- 这种方式为轮播图响应式缩放，而下面不能 -->
+                <a href="javascript:;"><img src="images/banner/banner1_sm.jpg" class="d-block d-md-none w-100" alt="..."></a>
+            </div>
+            <div class="carousel-item">
+                <a href="javascript:;" class="d-none d-md-block banner_item"
+                    style="background-image:url('images/banner/banner2.jpg')"></a>
+                <a href="javascript:;"><img src="images/banner/banner2_sm.jpg" class="d-block d-md-none w-100" alt="..."></a>
+            </div>
+            <div class="carousel-item">
+                <a href="javascript:;" class="d-none d-md-block banner_item"
+                    style="background-image:url('images/banner/banner3.jpg')"></a>
+                <a href="javascript:;"><img src="images/banner/banner3_sm.jpg" class="d-block d-md-none w-100" alt="..."></a>
+            </div>
+            <div class="carousel-item">
+                <a href="javascript:;" class="d-none d-md-block banner_item"
+                    style="background-image:url('images/banner/banner4.jpg')"></a>
+                <a href="javascript:;"><img src="images/banner/banner4_sm.jpg" class="d-block d-md-none w-100" alt="..."></a>
+            </div>
+            <div class="carousel-item">
+                <a href="javascript:;" class="d-none d-md-block banner_item"
+                    style="background-image:url('images/banner/banner5.jpg')"></a>
+                <a href="javascript:;"><img src="images/banner/banner5_sm.jpg" class="d-block d-md-none w-100" alt="..."></a>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <!-- 产品板块 -->
+    <section id="product" class="mt-3">
+        <div class="container">
+            <div id="proTabBox">
+                <ul class="nav nav-tabs bg-light" id="proTab" role="tablist">
+                    <li class="nav-item ">
+                        <a class="nav-link active" data-toggle="tab" href="#proTab1" role="tab" aria-controls="home"
+                            aria-selected="true">手机</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" data-toggle="tab" href="#proTab2" role="tab" aria-controls="profile"
+                            aria-selected="false">笔记本&平板</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" data-toggle="tab" href="#proTab3" role="tab" aria-controls="contact"
+                            aria-selected="false">穿戴</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" data-toggle="tab" href="#proTab4" role="tab" aria-controls="contact"
+                            aria-selected="false">智能家居</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" data-toggle="tab" href="#proTab5" role="tab" aria-controls="contact"
+                            aria-selected="false">配件</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" data-toggle="tab" href="#proTab6" role="tab" aria-controls="contact"
+                            aria-selected="false">HUAWEI P30系列</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content" id="myTabContent">
+                <!-- 手机区域 -->
+                <div class="tab-pane fade show " id="proTab1" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/phone/0.png" alt=""
+                                        title="HUAWEI P30 Pro">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI P30 Pro
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥4988</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/phone/1.png" alt=""
+                                        title="HUAWEI Mate 20">
+                                    <div class="card-body align-bottom">
+                                        <h4 class="card-title text-truncate">HUAWEI Mate 20</h4>
+                                        <p class="card-text text-center mb-1">¥3199</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
 
-  休唱阳关别去，  只今凤诏归来。
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/phone/2.png" alt=""
+                                        title="HUAWEI Mate 20 RS保时捷设计">
+                                    <div class="card-body align-bottom">
+                                        <h4 class="card-title text-truncate">HUAWEI Mate
+                                            20 RS保时捷设计</h4>
+                                        <p class="card-text text-center mb-1">¥12999</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/phone/3.png" alt=""
+                                        title="HUAWEI Mate 20 Pro">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI Mate 20
+                                            Pro
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥5099</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/phone/4.png" alt=""
+                                        title="HUAWEI nova 4e">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI nova 4e
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥1999</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/phone/5.png" alt=""
+                                        title="华为畅享9">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为畅享9</h4>
+                                        <p class="card-text text-center mb-1">¥1099</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/phone/6.png" alt=""
+                                        title="华为畅享 9e">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为畅享 9e</h4>
+                                        <p class="card-text text-center mb-1">¥799</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/phone/7.png" alt=""
+                                        title="华为平板 M6 10.8英寸">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为平板 M6 10.8英寸
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥2999</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/phone/8.png" alt=""
+                                        title="华为麦芒8">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为麦芒8</h4>
+                                        <p class="card-text text-center mb-1"> ¥1699</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/phone/9.png" alt=""
+                                        title="HUAWEI nova 3i">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI nova 3i</h4>
+                                        <p class="card-text text-center mb-1">¥2199</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/phone/10.png" alt=""
+                                        title="HUAWEI Mate 20 X 5G版">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI Mate 20
+                                            X 5G版</h4>
+                                        <p class="card-text text-center mb-1">¥6199</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/phone/11.png" alt=""
+                                        title="HUAWEI nova 5i Pro">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI nova 5i
+                                            Pro
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥2199</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 平板 电脑区域 -->
+                <div class="tab-pane fade show " id="proTab2" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/1.png" alt=""
+                                        title="荣耀MagicBook">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">荣耀MagicBook
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥3999</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/2.png" alt=""
+                                        title="HUAWEI 背包">
+                                    <div class="card-body align-bottom">
+                                        <h4 class="card-title text-truncate">HUAWEI 背包
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥199</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
 
-  五云两两望三台。已觉精神聚会。
-	</code>
-	</pre>
-		<pre><code>
-   南歌子词二首/新添声杨柳枝词
-          [宋]温庭筠
-  一尺深红胜曲尘，天生旧物不如新。
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/3.png" alt=""
+                                        title="HUAWEI 极简背包">
+                                    <div class="card-body align-bottom">
+                                        <h4 class="card-title text-truncate">HUAWEI 极简背包</h4>
+                                        <p class="card-text text-center mb-1">¥119</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/4.png" alt=""
+                                        title="荣耀 MagicBook Pro">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">荣耀 MagicBook
+                                            Pro
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥5499</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/5.png" alt=""
+                                        title="HUAWEI 内胆包">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI 内胆包</h4>
+                                        <p class="card-text text-center mb-1">¥99</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/6.png" alt=""
+                                        title="HUAWEI 蓝牙鼠标">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI 蓝牙鼠标</h4>
+                                        <p class="card-text text-center mb-1">¥179</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/7.png" alt=""
+                                        title="华为平板 M6 8.4英寸">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为平板 M6 8.4英寸
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥1999</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/8.png" alt=""
+                                        title="华为平板 M6 10.8英寸">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为平板 M6 10.8英寸
+                                            Pro
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥2299</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/9.png" alt=""
+                                        title="HUAWEI 双头 USB-C 线缆">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI 双头
+                                            USB-C 线缆</h4>
+                                        <p class="card-text text-center mb-1"> ¥69</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/10.png" alt=""
+                                        title="HUAWEI MateBook X Pro 2019 款享3期免息 晒单赠内胆包">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI MateBook X Pro
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥8999</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/11.png" alt=""
+                                        title="HUAWEI MateBook E 2019 款">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI
+                                            MateBook E 2019 款</h4>
+                                        <p class="card-text text-center mb-1">¥3999</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/12.png" alt=""
+                                        title="HUAWEI MateBook 14 享3期免息">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">
+                                            HUAWEI MateBook 14
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥5999</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/13.png" alt=""
+                                        title="华为平板 M5 青春版 8.0英寸 最高直降100+3期免息">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">
+                                            华为平板 M5 青春版 8.0英寸</h4>
+                                        <p class="card-text text-center mb-1"> ¥1099</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/14.png" alt=""
+                                        title="荣耀平板5 8英寸">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">荣耀平板5 8英寸
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥1099</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/15.png" alt=""
+                                        title="HUAWEI MateBook 13享3期免息">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI
+                                            MateBook 13</h4>
+                                        <p class="card-text text-center mb-1">¥5699</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/16.png" alt=""
+                                        title="荣耀Waterplay最高降300+3期免息">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">
+                                            荣耀Waterplay
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥1299</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/17.png" alt=""
+                                        title="荣耀Waterplay 8英寸 最高降500元">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">
+                                            荣耀Waterplay 8英寸 </h4>
+                                        <p class="card-text text-center mb-1"> ¥999</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/18.png" alt=""
+                                        title="华为平板 M5 青春版最高直降100+3期免息">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为平板 M5
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥1799</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/19.png" alt=""
+                                        title="华为畅享平板享3期免息">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为畅享平板</h4>
+                                        <p class="card-text text-center mb-1">¥1299</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/computer/20.png" alt=""
+                                        title="荣耀平板5 10.1英寸直降200+6期免息">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">
+                                            荣耀平板5 10.1英寸
+                                        </h4>
+                                        <p class="card-text text-center mb-1">¥1199</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 穿戴区域 -->
+                <div class="tab-pane fade show " id="proTab3" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/1.png" alt=""
+                                        title="荣耀手环 5">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">荣耀手环 5</h4>
+                                        <p class="card-text text-center mb-1">¥189</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/2.png" alt=""
+                                        title="荣耀手表魔法系列（熔岩黑）">
+                                    <div class="card-body align-bottom">
+                                        <h4 class="card-title text-truncate" title="">荣耀手表魔法系列（熔岩黑）</h4>
+                                        <p class="card-text text-center mb-1">¥699</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
 
-  合欢桃核终堪恨，里许元来别有人。
-			
-  井底点灯深烛伊，共郎长行莫围棋。
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/3.png" alt=""
+                                        title="HUAWEI WATCH GT">
+                                    <div class="card-body align-bottom">
+                                        <h4 class="card-title text-truncate" title="">HUAWEI WATCH GT</h4>
+                                        <p class="card-text text-center mb-1">¥1288</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/4.png" alt=""
+                                        title="华为手环 3 Pro">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">华为手环 3 Pro</h4>
+                                        <p class="card-text text-center mb-1">¥379</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/5.png" alt=""
+                                        title="华为手环 3">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">华为手环 3</h4>
+                                        <p class="card-text text-center mb-1">¥249</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/6.png" alt=""
+                                        title="NOLO VR 交互套件">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">NOLO VR 交互套件</h4>
+                                        <p class="card-text text-center mb-1">¥999</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/7.png" alt=""
+                                        title="华为儿童手表 3">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">华为儿童手表 3</h4>
+                                        <p class="card-text text-center mb-1">¥368</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/8.png" alt=""
+                                        title="荣耀手表梦幻系列（流沙杏 陶瓷版）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">荣耀手表梦幻系列</h4>
+                                        <p class="card-text text-center mb-1">¥999</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/9.png" alt=""
+                                        title="荣耀小K 2 儿童手表（魔法蓝）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">荣耀小K 2 儿童手表</h4>
+                                        <p class="card-text text-center mb-1">¥259</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/10.png" alt=""
+                                        title="华为手环 3e 跑步精灵（曜石黑）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">华为手环 3e 跑步精灵</h4>
+                                        <p class="card-text text-center mb-1">¥99</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/11.png" alt=""
+                                        title="华为儿童手表 3 Pro（极光蓝）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">华为儿童手表 3 Pro</h4>
+                                        <p class="card-text text-center mb-1">¥888</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/12.png" alt=""
+                                        title="荣耀手环4 标准版（陨石黑）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">荣耀手环4 标准版</h4>
+                                        <p class="card-text text-center mb-1">¥169</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/13.png" alt=""
+                                        title="荣耀手环4 Running版（肆意红）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">荣耀手环4 Running版</h4>
+                                        <p class="card-text text-center mb-1">¥89</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/14.png" alt=""
+                                        title="华为VR计算机连接线（白色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">华为VR计算机连接线</h4>
+                                        <p class="card-text text-center mb-1">¥299</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/15.png" alt=""
+                                        title="华为手环 B5 运动版（曜石黑）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">华为手环 B5 运动版</h4>
+                                        <p class="card-text text-center mb-1">¥899</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/16.png" alt=""
+                                        title="华为手环B3 青春版（黑色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">华为手环B3 青春版</h4>
+                                        <p class="card-text text-center mb-1">¥449</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/17.png" alt=""
+                                        title="荣耀畅玩手环 A2（魅焰红）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title="">荣耀畅玩手环 A2</h4>
+                                        <p class="card-text text-center mb-1">¥99</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/chuandai/18.jpg" alt=""
+                                        title="">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate" title=""></h4>
+                                        <p class="card-text text-center mb-1">¥</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 智能家居 -->
+                <div class="tab-pane fade show " id="proTab4" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/0.png" alt=""
+                                        title="荣耀智慧屏PRO 55英寸4K超清全面屏 鸿蒙系统 鸿鹄818智慧芯片">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">荣耀智慧屏PRO 55英寸4K超清全面屏 </h4>
+                                        <p class="card-text text-center mb-1">￥4799</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/1.png" alt=""
+                                        title="华为子母路由器 Q1 ">
+                                    <div class="card-body align-bottom">
+                                        <h4 class="card-title text-truncate">华为路由 Q1 </h4>
+                                        <p class="card-text text-center mb-1">￥459</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
 
-  玲珑骰子安红豆，入骨相思知不知。
-	</code></pre>
-	</div><!-- 用来填补左空缺 -->
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/2.png" alt=""
+                                        title="华为子母路由器 Q2">
+                                    <div class="card-body align-bottom">
+                                        <h4 class="card-title text-truncate">华为路由 Q2 </h4>
+                                        <p class="card-text text-center mb-1">￥299</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/3.png" alt=""
+                                        title="华为子母路由器 Q3 ">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为路由 Q3 </h4>
+                                        <p class="card-text text-center mb-1">￥769</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/4.png" alt=""
+                                        title="荣耀分布式路由">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">荣耀分布式路由</h4>
+                                        <p class="card-text text-center mb-1">￥749</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/5.png" alt=""
+                                        title="HUAWEI X Gentle Monster Eyewear SMART JACKBYE-01（黑色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI X Gentle Monster Eyewear SMART
+                                            JACKBYE-01</h4>
+                                        <p class="card-text text-center mb-1">暂无报价</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/6.png" alt=""
+                                        title="HUAWEI Mate 20 旅行主题保护壳">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI Mate 20 旅行主题保护壳</h4>
+                                        <p class="card-text text-center mb-1">￥99</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/7.png" alt=""
+                                        title="ROCK（洛克）华为P30 镜头保护膜0.15mm 透明 ">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">ROCK（洛克）华为P30 镜头保护膜0.15mm 透明 </h4>
+                                        <p class="card-text text-center mb-1">￥29</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/8.png" alt=""
+                                        title="荣耀FlyPods Pro无线耳机 高配版（铃兰白）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">荣耀FlyPods Pro无线耳机 高配版</h4>
+                                        <p class="card-text text-center mb-1">￥999</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/9.png" alt=""
+                                        title="绿联 Type C转HDMI转换器-拓展坞 深空灰">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">绿联 Type C转HDMI转换器-拓展坞 深空灰</h4>
+                                        <p class="card-text text-center mb-1">￥89</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/10.png" alt=""
+                                        title="小熊智能养生壶YSH-A15U6 香槟金">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">小熊智能养生壶YSH-A15U6 香槟金</h4>
+                                        <p class="card-text text-center mb-1">￥299</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/11.png" alt=""
+                                        title="九阳（Joyoung）破壁多功能家用智能料理机 L13-Y21">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">九阳（Joyoung）破壁多功能家用智能料理机 L13-Y21</h4>
+                                        <p class="card-text text-center mb-1">￥569</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/12.png" alt=""
+                                        title="极米无屏电视New Z4极光 香槟金（支持HUAWEI HiLink）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">极米无屏电视New Z4极光 香槟金</h4>
+                                        <p class="card-text text-center mb-1">￥3699</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/13.png" alt=""
+                                        title="华为AI音箱 （太空黑）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为AI音箱</h4>
+                                        <p class="card-text text-center mb-1">￥369</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/14.png" alt=""
+                                        title="极米无屏电视N20 深空灰（支持HUAWEI HiLink）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">极米无屏电视N20</h4>
+                                        <p class="card-text text-center mb-1">￥5789</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/15.png" alt=""
+                                        title="荣耀YOYO智能音箱-移动定制版（白色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">荣耀YOYO智能音箱-移动定制版</h4>
+                                        <p class="card-text text-center mb-1">￥299</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/16.png" alt=""
+                                        title="荣耀路由2S（白色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">荣耀路由2S</h4>
+                                        <p class="card-text text-center mb-1">￥179</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/17.png" alt=""
+                                        title="荣耀路由Pro 2（白色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">荣耀路由Pro 2</h4>
+                                        <p class="card-text text-center mb-1">￥295</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/18.png" alt=""
+                                        title="华为路由WS5200四核版（白色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为路由WS5200四核版（白色）</h4>
+                                        <p class="card-text text-center mb-1">￥239</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/smarthome/19.png" alt=""
+                                        title="荣耀路由 CD16（白色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">荣耀路由 CD16（白色）</h4>
+                                        <p class="card-text text-center mb-1">￥299</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 配件 -->
+                <div class="tab-pane fade show " id="proTab5" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/1.png" alt=""
+                                        title="绿联 笔记本金属支架">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">绿联 笔记本金属支架</h4>
+                                        <p class="card-text text-center mb-1">¥149</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/2.png" alt=""
+                                        title="绿联 出风口重力联动支架 星空灰">
+                                    <div class="card-body align-bottom">
+                                        <h4 class="card-title text-truncate">绿联 出风口重力联动支架</h4>
+                                        <p class="card-text text-center mb-1">¥49.9</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
 
-	<!-- 眼睛跟随鼠标 -->
-	<div class="eyes">
-		<div class="eye">
-			<div class="ball"></div>
-		</div>
-		<div class="eye">
-			<div class="ball"></div>
-		</div>
-		<h6 style="text-align: center;color:#bb2c49;font-weight: 700 "><!-- 为了效果最好，请刷新(按F5)后，关闭左侧菜单栏,以达到最佳效果 --></h6>
-	</div>
-	<!-- showinner区域 -->
-	<div id="oldshowinner">
-		<iframe src="work2/index.html" name="topFrame" scrolling="" noresize="noresize"frameborder="0" id="topFrame"></iframe></div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/3.png" alt=""
+                                        title="绿联 仪表台手机支架 黑色">
+                                    <div class="card-body align-bottom">
+                                        <h4 class="card-title text-truncate">绿联 仪表台手机支架</h4>
+                                        <p class="card-text text-center mb-1">¥39</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/4.png" alt=""
+                                        title="绿联 临时停车牌 星空灰">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">绿联 临时停车牌</h4>
+                                        <p class="card-text text-center mb-1">¥39</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/5.png" alt=""
+                                        title="绿联 Type C多功能转换器 带供电接口-拓展坞 深空灰">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">绿联 Type C多功能转换器</h4>
+                                        <p class="card-text text-center mb-1">¥279</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/6.png" alt=""
+                                        title="HUAWEI FreeLace 无线耳机（仲夏紫）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI FreeLace 无线耳机</h4>
+                                        <p class="card-text text-center mb-1">¥489</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/7.png" alt=""
+                                        title="华为运动心率蓝牙耳机R1 Pro（黑色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为运动心率蓝牙耳机R1 Pro</h4>
+                                        <p class="card-text text-center mb-1">¥549</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/8.png" alt=""
+                                        title="HUAWEI FreeBuds 悦享版 无线耳机 （陶瓷白）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI FreeBuds 悦享版 无线耳机</h4>
+                                        <p class="card-text text-center mb-1">¥399</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/9.png" alt=""
+                                        title="HUAWEI FreeBuds 2 Pro无线耳机（碳晶黑）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">HUAWEI FreeBuds 2 Pro无线耳机</h4>
+                                        <p class="card-text text-center mb-1">¥939</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/10.png" alt=""
+                                        title="华为 Colortooth 多彩蓝牙耳机（萤石白）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为 Colortooth 多彩蓝牙耳机</h4>
+                                        <p class="card-text text-center mb-1">¥89</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/11.png" alt=""
+                                        title="华为经典耳机（USB Type-c版）黑色">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为经典耳机（USB Type-c版）</h4>
+                                        <p class="card-text text-center mb-1">¥99</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/12.png" alt=""
+                                        title="华为耳机插口转换器（Type-C 至3.5mm耳机孔）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为耳机插口转换器</h4>
+                                        <p class="card-text text-center mb-1">¥29</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/13.png" alt=""
+                                        title="华为 AM115 半入耳式耳机 （白色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为 AM115 半入耳式耳机</h4>
+                                        <p class="card-text text-center mb-1">¥39</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/14.png" alt=""
+                                        title="华为运动蓝牙耳机（红色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为运动蓝牙耳机</h4>
+                                        <p class="card-text text-center mb-1">¥269</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/15.png" alt=""
+                                        title="华为AM116半入耳式耳机金属版（白色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为AM116半入耳式耳机金属版</h4>
+                                        <p class="card-text text-center mb-1">¥59</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/16.png" alt=""
+                                        title="华为mini体重秤（白色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为mini体重秤</h4>
+                                        <p class="card-text text-center mb-1">¥59</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/17.png" alt=""
+                                        title="华为智能体脂秤 WiFi版（白色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为智能体脂秤 WiFi版（白色）</h4>
+                                        <p class="card-text text-center mb-1">¥179</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/18.png" alt=""
+                                        title="华为智能体脂秤（黑色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为智能体脂秤</h4>
+                                        <p class="card-text text-center mb-1">¥169</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/19.png" alt=""
+                                        title="华为打印相片纸（白色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为打印相片纸</h4>
+                                        <p class="card-text text-center mb-1">¥69</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_blank">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/peijian/20.png" alt=""
+                                        title="华为便携照片打印机 拍立得 迷你口袋 手机打印（白色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">华为便携照片打印机 拍立得</h4>
+                                        <p class="card-text text-center mb-1">¥539</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- 华为P30系列 -->
+                <div class="tab-pane fade show active" id="proTab6" role="tabpanel" aria-labelledby="home-tab">
+                    <!-- video -->
+                    <div class="container ">
+                        <div class="position-relative">
+                            <img src="images/banner/huawei.jpg" class="d-block  w-100 " alt="..."></a>
+                            <video width="80%" height="80%"
+                                poster="https://res6.vmallres.com/shopdc/pic/5c8dbdc6-5033-4ecc-b0d1-d50d97680d31.jpg"
+                                controls="controls" style="position: absolute;transform: translate(14%,-105%)">
+                                <source
+                                    src="https://1251250874.vod2.myqcloud.com/439f276avodtransgzp1251250874/5be5440b5285890787231462054/v.f20.mp4"
+                                    type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/huaweip30/1.png" alt=""
+                                        title="HUAWEI P30 麒麟980 超感光徕卡三摄 屏内指纹 双景录像 6GB+128GB 全网通版（天空之境）">
+                                    <div class="card-body">
+                                        <h4 class="card-title ">HUAWEI P30 麒麟980 超感光徕卡三摄（天空之境）</h4>
+                                        <p class="card-text text-center mb-1">¥3688起</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/huaweip30/2.png" alt=""
+                                        title="HUAWEI P30 Pro 麒麟980 超感光徕卡四摄 屏内指纹 双景录像 8GB+128GB 全网通版（天空之境）">
+                                    <div class="card-body align-bottom">
+                                        <h4 class="card-title ">HUAWEI P30 Pro 麒麟980 超感光徕卡四摄 (天空之境）</h4>
+                                        <p class="card-text text-center mb-1">¥4988起</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
 
-	<div id="showinner">
-		<!-- 注意scrolling="no"的时候不能滚动 -->
-		<iframe src="" name="topFrame" scrolling="" noresize="noresize" frameborder="0" id="topFrame"></iframe>
-	</div>
-
-	<!-- <navmenu -->
-	<div class="head-v3">
-		<div class="navigation-up">
-			<div class="navigation-inner">
-				<div class="navigation-v3">
-					<ul>
-						<li class="nav-up-selected-inpage" _t_nav="home">
-							<h2> <a href="#">首页</a> </h2>
-						</li>
-						<li class="" _t_nav="product">
-							<h2> <a href="#">云产品</a> </h2>
-						</li>
-						<li class="" _t_nav="wechat">
-							<h2> <a href="#">微信建站</a> </h2>
-						</li>
-						<li class="" _t_nav="solution">
-							<h2> <a href="#">行业解决方案</a> </h2>
-						</li>
-						<li class="" _t_nav="cooperate">
-							<h2> <a href="#">合作伙伴</a> </h2>
-						</li>
-						<li _t_nav="support">
-							<h2> <a href="#">帮助与支持</a> </h2>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="navigation-down">
-			<div id="product" class="nav-down-menu menu-1" style="display: none;" _t_nav="product">
-				<div class="navigation-down-inner">
-					<dl style="margin-left:10px;">
-						<dt>计算机与网络</dt>
-						<dd> <a hotrep="hp.header.product.compute1" href="#"
-								name="https://www.aliyun.com/product/ecs?utm_content=se_1002465755">云服务器</a> </dd>
-						<dd> <a hotrep="hp.header.product.compute2" href="#"
-								name="https://help.aliyun.com/product/29830.html">弹性Web引擎</a> </dd>
-					</dl>
-					<dl>
-						<dt>存储与CDN</dt>
-						<dd> <a hotrep="hp.header.product.storage1" href="#"
-								name="https://activity.huaweicloud.com/free_test/index.html?utm_source=baidu-b&utm_medium=se-cpc-op&utm_campaign=PP-%E7%AB%9E%E5%93%81&utm_content=PP-%E7%AB%9E%E5%93%81-%E8%85%BE%E8%AE%AF%E4%BA%91&utm_term=%E8%85%BE%E8%AE%AF%E4%BA%91&b_scene_zt=1&renqun_youhua=314674">云数据库</a>
-						</dd>
-						<dd> <a hotrep="hp.header.product.storage2" href="#"
-								name="https://cloud.tencent.com/act/pro/mysql?fromSource=gwzcw.2216985.2216985.2216985&utm_medium=cpc&utm_id=gwzcw.2216985.2216985.2216985">NoSQL高速存储</a>
-						</dd>
-						<dd> <a hotrep="hp.header.product.storage4" href="#"
-								name="https://www.aliyun.com/product/oss?utm_content=se_1001714693">对象存储服务(beta)</a>
-						</dd>
-						<dd> <a hotrep="hp.header.product.storage3" href="#"
-								name="https://cloud.inspur.com/activity/cdn/?&utm_source=pp&utm_medium=baidu&utm_term=CDN&ozs=13088-2755">CDN</a>
-						</dd>
-					</dl>
-					<dl>
-						<dt>监控与安全</dt>
-						<dd> <a hotrep="hp.header.product.monitoring1" href="#">云监控</a> </dd>
-						<dd> <a hotrep="hp.header.product.monitoring2" href="#">云安全</a> </dd>
-						<dd> <a hotrep="hp.header.product.monitoring3" href="#">云拨测</a> </dd>
-					</dl>
-					<dl>
-						<dt>数据分析</dt>
-						<dd> <a hotrep="hp.header.product.analysis1" href="#">腾讯云分析</a> </dd>
-						<dd> <a hotrep="hp.header.product.analysis2" href="#">关键因子</a> </dd>
-					</dl>
-					<dl>
-						<dt>开发者工具</dt>
-						<dd> <a hotrep="hp.header.product.devtool1" href="#">移动加速</a> </dd>
-						<dd> <a hotrep="hp.header.product.devtool2" href="#">应用加固</a> </dd>
-						<dd> <a hotrep="hp.header.product.devtool3" href="#">信鸽推送</a> </dd>
-					</dl>
-					<dl>
-						<dt>开发者服务</dt>
-						<dd> <a hotrep="hp.header.product.service1" href="#">安全认证服务</a> </dd>
-						<dd> <a hotrep="hp.header.product.service2" href="#">域名备案</a> </dd>
-					</dl>
-				</div>
-			</div>
-			<div id="solution" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="solution">
-				<div class="navigation-down-inner">
-					<dl style="margin-left: 380px;">
-						<dd> <a class="link" hotrep="hp.header.solution.1" href="#">微信</a> </dd>
-					</dl>
-					<dl>
-						<dd> <a class="link" hotrep="hp.header.solution.2" href="#">游戏</a> </dd>
-					</dl>
-					<dl>
-						<dd> <a class="link" hotrep="hp.header.solution.3" href="#">移动应用</a> </dd>
-					</dl>
-				</div>
-			</div>
-			<div id="support" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="support">
-				<div class="navigation-down-inner">
-					<dl style="margin-left: 610px;">
-						<dd> <a class="link" hotrep="hp.header.support.1" href="#">资料库</a> </dd>
-					</dl>
-					<dl>
-						<dd> <a class="link" hotrep="hp.header.support.2" href="#">论坛</a> </dd>
-					</dl>
-					<dl>
-						<dd> <a class="link" hotrep="hp.header.support.3" href="#">亿元扶持</a> </dd>
-					</dl>
-				</div>
-			</div>
-			<div id="cooperate" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="cooperate">
-				<div class="navigation-down-inner">
-					<dl style="margin-left: 480px;">
-						<dd> <a hotrep="hp.header.partner.1" href="#">代理商</a> </dd>
-					</dl>
-					<dl>
-						<dd> <a hotrep="hp.header.partner.2" href="#">微信服务商</a> </dd>
-					</dl>
-					<dl>
-						<dd> <a hotrep="hp.header.partner.3" href="#">创投机构</a> </dd>
-					</dl>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Sidebar -->
-
-	<div class="sidebar">
-		<div class="sidebar-collapse">
-			<!-- Sidebar Header Logo-->
-			<div class="sidebar-header">
-				<img src="images/logo.png" class="img-responsive" alt="" />
-			</div>
-			<!-- Sidebar Menu-->
-			<div class="sidebar-menu">
-				<nav id="menu" class="nav-main" role="navigation">
-					<ul class="nav nav-sidebar">
-						<div class="panel-body text-center">
-							<div class="bk-avatar">
-								<img src="images/admin.jpg" class="img-circle bk-img-60" alt="" />
-							</div>
-							<div class="bk-padding-top-10">
-								<i class="fa fa-circle text-success"></i> <small>Administrator</small>
-							</div>
-						</div>
-						<div class="divider2"></div>
-						<li class="active">
-							<a href="">
-								<i class="fa fa-laptop" aria-hidden="true"></i><span>Dashboard</span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<span class="pull-right label label-primary">165</span>
-								<i class="fa fa-envelope" aria-hidden="true"></i><span>邮箱</span>
-							</a>
-							<ul class="nav nav-children">
-
-							</ul>
-						</li>
-						<li class="nav-parent">
-							<a>
-								<i class="fa fa-copy" aria-hidden="true"></i><span>动画&插件</span>
-							</a>
-							<ul class="nav nav-children">
-								<!-- 是指a的name属性为需要显示的html的相对路径名，点击this然后获取this的name属性，
-								动态修改到div#showinner下面的iframe的src -->
-								<li><a href="#" name="work1/index.html">1、jQuery纵向下拉菜单导航</a></li>
-								<li><a href="#" name="work2/index.html">2、一个小清新的闹钟</a></li>
-								<li><a href="#" name="work3-animation/001.html">3、彩虹扇子</a></li>
-								<li><a href="#" name="work3-animation/002.html">4、3D立方体</a></li>
-								<li><a href="#" name="work3-animation/002.html">5、3D立方体</a></li>
-							</ul>
-						</li>
-						<li class="nav-parent">
-							<a>
-								<i class="fa fa-list-alt" aria-hidden="true"></i><span>表单</span>
-							</a>
-							<ul class="nav nav-children">
-								<li><a href="#" name="work4-form/index.html">1</a></li>
-								<li><a href="#" name="">2</a></li>
-								<li><a href="#" name="">3</a></li>
-								<li><a href="#" name="">4</a></li>
-							</ul>
-						</li>
-						<li>
-						</li>
-						<li class="nav-parent">
-							<a>
-								<i class="fa fa-life-bouy" aria-hidden="true"></i><span>可视化音乐</span>
-							</a>
-							<ul class="nav nav-children">
-								<li><a href="#" name="audio-media/index.html">梁博-给我一点温度</a></li>
-							</ul>
-						</li>
-						<li class="nav-parent">
-							<a>
-								<i class="fa fa-random" aria-hidden="true"></i><span>Visual Chart</span>
-							</a>
-							<ul class="nav nav-children">
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-							</ul>
-						</li>
-						<li class="nav-parent">
-							<a>
-								<span>UI Elements</span>
-							</a>
-							<ul class="nav nav-children">
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-							</ul>
-						</li>
-						<li>
-							<a>
-								<i class="fa fa-font" aria-hidden="true"></i><span>Typography</span>
-							</a>
-						</li>
-						<li class="nav-parent">
-							<a>
-								<i class="fa fa-bolt" aria-hidden="true"></i><span>Icons</span>
-							</a>
-							<ul class="nav nav-children">
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-							</ul>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-picture-o" aria-hidden="true"></i><span>相册</span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<i class="fa fa-calendar" aria-hidden="true"></i><span>Calendar</span>
-							</a>
-						</li>
-
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</div>
-	<!-- End Sidebar Menu-->
-	<footer>
-		<div class="container">
-			<h6>Find & follow us</h6>
-			<ul class="icon-social">
-				<li class="facebook"><a href="#" title="脸书"><i class="fa fa-facebook"></i></a></li>
-				<li class="twitter"><a href="#" title="推特"><i class="fa fa-twitter"></i></a></li>
-				<li class="qq"><a href="images/qq.jpg" title="QQ"><i class="iconfont icon-QQ"></i></a></li>
-				<li class="wechat"><a href="images/weixin1.png" title="微信"><i class="iconfont icon-weixin"></i></a>
-				</li>
-				<li class="familychat"><a href="images/gongzhonghao.jpg"><i class="iconfont icon-weixingongzhonghao"
-							title="微信公众号"></i></a></li>
-			</ul>
-			<div class="tel-fax-mail">
-				<ul>
-					<li><span class="iconfont icon-dianhua">Tel:</span> 157-0986-1027</li>
-					<li><span class="iconfont icon-youxiang">Email:</span> <a href="images/admin.jpg"
-							class="__cf_email__" data-cfemail="">1163989452@qq.com</a></li>
-				</ul>
-			</div>
-			<div class="ft-bottom">
-				<span>Copyright (c) 2019 All Rights <a href="http://www.jq22.com/">Reserved</a> </span>
-			</div>
-		</div>
-
-	</footer>
-
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/huaweip30/3.png" alt=""
+                                        title="HUAWEI P20 Pro 4000万徕卡三摄 AI摄影大师 6GB+64GB 全网通版（亮黑色）">
+                                    <div class="card-body align-bottom">
+                                        <h4 class="card-title ">HUAWEI P20 Pro 4000万徕卡三摄 AI摄影大师(亮黑色）</h4>
+                                        <p class="card-text text-center mb-1">¥4988起</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3 " src="images/products/huaweip30/4.jpg" alt=""
+                                        title="HUAWEI P30 Pro 麒麟980 超感光徕卡四摄 屏内指纹 双景录像 8GB+128GB 全网通版（极光色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title ">HUAWEI P30 Pro 麒麟980 超感光徕卡四摄 （极光色）</h4>
+                                        <p class="card-text text-center mb-1 ">¥4988起</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/huaweip30/5.png" alt=""
+                                        title="HUAWEI P30 硅胶保护壳 （蓝色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title ">HUAWEI P30 硅胶保护壳 （蓝色）</h4>
+                                        <p class="card-text text-center mb-1">¥99</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/huaweip30/6.png" alt=""
+                                        title="HUAWEI P30 智能视窗保护套 （卡其色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title ">HUAWEI P30 智能视窗保护套 （卡其色）</h4>
+                                        <p class="card-text text-center mb-1">¥229</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/huaweip30/7.png" alt=""
+                                        title="HUAWEI P30 无线充电保护壳 （动感橙）">
+                                    <div class="card-body">
+                                        <h4 class="card-title ">HUAWEI P30 无线充电保护壳 （动感橙）</h4>
+                                        <p class="card-text text-center mb-1">¥229</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/huaweip30/8.png" alt=""
+                                        title="HUAWEI P30 Pro 透明保护壳 （春色秘境）">
+                                    <div class="card-body">
+                                        <h4 class="card-title ">HUAWEI P30 Pro 透明保护壳 （春色秘境）</h4>
+                                        <p class="card-text text-center mb-1">¥199</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/huaweip30/9.png" alt=""
+                                        title="HUAWEI P30 Pro 硅胶保护壳 （红色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title ">HUAWEI P30 Pro 硅胶保护壳 （红色）</h4>
+                                        <p class="card-text text-center mb-1">¥99</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/huaweip30/10.png" alt=""
+                                        title="HUAWEI P30 透明保护壳 （霓色星语）">
+                                    <div class="card-body">
+                                        <h4 class="card-title ">HUAWEI P30 透明保护壳 （霓色星语）</h4>
+                                        <p class="card-text text-center mb-1">¥199</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/huaweip30/11.png" alt=""
+                                        title="HUAWEI P30 皮革保护壳 （优雅灰色）">
+                                    <div class="card-body">
+                                        <h4 class="card-title ">HUAWEI P30 皮革保护壳 （优雅灰色）</h4>
+                                        <p class="card-text text-center mb-1">¥99</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 col-md-3 col-lg-3 pt-3">
+                            <a href="javascript:;" class="d-blcok " id="products" target="_b">
+                                <div class="card">
+                                    <img class="card-img-top mt-3" src="images/products/huaweip30/12.png" alt=""
+                                        title="HUAWEI P30 户外保护壳 极夜黑">
+                                    <div class="card-body">
+                                        <h4 class="card-title ">HUAWEI P30 户外保护壳 极夜黑</h4>
+                                        <p class="card-text text-center mb-1">¥229</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 分割线 -->
+    <div class="container  mt-3 w-100" style="border:2px solid #ac9999; opacity: 0.5;"></div>
+    <!-- 资讯板块 -->
+    <section id="news" class="mt-4 mt-sm-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h3 class="border-bottom border-danger pb-3 mb-3 text-center position-relative" id="new_news">最新资讯</h3>
+                </div>
+                <!-- 中间可点击的图标切换 -->
+                <div class="col-md-2  text-center ">
+                    <ul class="nav flex-md-column  mt-1 position-relative" id="navNewsTab">
+                        <li class="mb-5 flex-fill">
+                            <!-- 大于sm垂直排列 在主轴方向水平对齐 -->
+                            <a class="active " href="#newsTab1" data-toggle="tab"><i class="fa fa-newspaper-o"
+                                    aria-hidden="true"></i></a>
+                        </li>
+                        <li class="mb-5 flex-fill">
+                            <a href="#newsTab2" data-toggle="tab"><i class="fa fa-language" aria-hidden="true"></i></a>
+                        </li>
+                        <li class="mb-5 flex-fill">
+                            <a href="#newsTab3" data-toggle="tab"><i class="fa fa-graduation-cap"
+                                    aria-hidden="true"></i></a>
+                        </li>
+                        <li class="mb-5 flex-fill">
+                            <a href="#newsTab4" data-toggle="tab"><i class="fa fa-map" aria-hidden="true"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- 右侧新闻卡片列表 list-custom-->
+                <div class="col-md-7">
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="newsTab1" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="list-group ">
+                                <a href="https://www.sohu.com/a/326398266_115565?scm=0.0.0.0&spm=smpc.ch30.top-fspic.1.156292266927999soy3R"
+                                    class="list-group-item list-group-item-action flex-column align-items-start active">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><i class="fa fa-paperclip" aria-hidden="true"></i> 华为nova5
+                                            Pro测评:麒麟980+40W快充,不再单纯主打拍照 </h5>
+                                        <!-- <small>small</small> -->
+                                    </div>
+                                    <p class="mb-1">图文 | 搜狐科技 林国振</p>
+                                    <small>paragraph footer</small>
+                                </a>
+                                <a href="http://mobile.zol.com.cn/714/7140824.html"
+                                    class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><i class="fa fa-paperclip" aria-hidden="true"></i> 售价3988元起
+                                            HUAWEI P30系列国内正式开售</h5>
+                                        <!-- <small>small</small> -->
+                                    </div>
+                                    <p class="mb-1"> [ 中关村在线 原创 ] 作者：张菁楠 | 责编：庞超 </p>
+                                    <small>paragraph footer</small>
+                                </a>
+                                <a href="https://www.toutiao.com/i6685509604488512007/"
+                                    class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><i class="fa fa-paperclip"
+                                                aria-hidden="true"></i>手机通信性能评测报告：华为Mate 20 Pro获六个第一</h5>
+                                        <!-- <small>small</small> -->
+                                    </div>
+                                    <p class="mb-1">[IT之家]</p>
+                                    <small>paragraph footer</small>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade " id="newsTab2" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="list-group ">
+                                <a href="https://baijiahao.baidu.com/s?id=1641379828460351503&wfr=spider&for=pc"
+                                    class="list-group-item list-group-item-action flex-column align-items-start active">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><i class="fa fa-paperclip" aria-hidden="true"></i>
+                                            华为张平安：华为海外应用商城APP上线量剧增</h5>
+                                        <!-- <small>small</small> -->
+                                    </div>
+                                    <p class="mb-1">每日经济新闻</p>
+                                    <small>paragraph footer</small>
+                                </a>
+                                <a href="https://baijiahao.baidu.com/s?id=1631011738290305327&wfr=spider&for=pc"
+                                    class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><i class="fa fa-paperclip" aria-hidden="true"></i>
+                                            华为商城上架P30神秘配件 竟让手机1秒支持无线充电</h5>
+                                        <!-- <small>small</small> -->
+                                    </div>
+                                    <p class="mb-1">CNMO手机中国</p>
+                                    <small>paragraph footer</small>
+                                </a>
+                                <a href="https://www.huawei.com/cn/press-events/news/2019/7/huawei-launch-oceanstor-dorado-v6?utm_source=corp_bdpz&utm_campaign=regular&utm_medium=cpc"
+                                    class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><i class="fa fa-paperclip"
+                                                aria-hidden="true"></i>华为发布新一代智能存储OceanStor Dorado V6</h5>
+                                        <!-- <small>small</small> -->
+                                    </div>
+                                    <p class="mb-1">华为</p>
+                                    <small>paragraph footer</small>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="newsTab3" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="list-group ">
+                                <a href="https://finance.sina.com.cn/roll/2019-08-20/doc-ihytcern2127028.shtml"
+                                    class="list-group-item list-group-item-action flex-column align-items-start active">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><i class="fa fa-paperclip" aria-hidden="true"></i>
+                                            柳传志：华为一战是非抢不可的科技战略制高点 | CEO说</h5>
+                                        <!-- <small>small</small> -->
+                                    </div>
+                                    <p class="mb-1">钛媒体</p>
+                                    <small>paragraph footer</small>
+                                </a>
+                                <a href="http://www.cet.com.cn/itpd/itxw/2325308.shtml"
+                                    class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><i class="fa fa-paperclip" aria-hidden="true"></i>
+                                            华为拟在俄罗斯建1500人研究中心</h5>
+                                        <!-- <small>small</small> -->
+                                    </div>
+                                    <p class="mb-1">中国经济新闻网</p>
+                                    <small>paragraph footer</small>
+                                </a>
+                                <a href="http://news.mydrivers.com/1/641/641771.htm"
+                                    class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><i class="fa fa-paperclip" aria-hidden="true"></i>
+                                            打击华为有啥好处？美国众多科技公司营收暴跌</h5>
+                                        <!-- <small>small</small> -->
+                                    </div>
+                                    <p class="mb-1">快科技</p>
+                                    <small>paragraph footer</small>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="newsTab4" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="list-group ">
+                                <a href="https://www.thepaper.cn/newsDetail_forward_4205180"
+                                    class="list-group-item list-group-item-action flex-column align-items-start active">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><i class="fa fa-paperclip"
+                                                aria-hidden="true"></i>鸿蒙系统要想大成，华为必须学会平台思维</h5>
+                                        <!-- <small>small</small> -->
+                                    </div>
+                                    <p class="mb-1">澎湃新闻·澎湃号·湃客</p>
+                                    <small>paragraph footer</small>
+                                </a>
+                                <a href="http://news.chnweiyu.com/jiadian/201908/2010556.html"
+                                    class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><i class="fa fa-paperclip"
+                                                aria-hidden="true"></i>从5G通讯技术到鸿蒙操作系统 华为向各国展示中国智造</h5>
+                                        <!-- <small>small</small> -->
+                                    </div>
+                                    <p class="mb-1">民日报海外版</p>
+                                    <small>paragraph footer</small>
+                                </a>
+                                <a href="https://baijiahao.baidu.com/s?id=1642258111434918220&wfr=spider&for=pc"
+                                    class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><i class="fa fa-paperclip"
+                                                aria-hidden="true"></i>鸿蒙OS落地，催化国产软件替代产业链，ICT产业发展新机遇</h5>
+                                        <!-- <small>small</small> -->
+                                    </div>
+                                    <p class="mb-1">零镜网</p>
+                                    <small>paragraph footer</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 底部板块 -->
+    <footer>
+        <div class="container show">
+            <h6 class="mt-5">Find & follow us</h6>
+            <ul class="icon-social">
+                <li class="facebook">
+                    <a href="javascript:;" title="脸书">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                </li>
+                <li class="twitter">
+                    <a href="javascript:;" title="推特">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+                </li>
+                <li class="google">
+                    <a href="images/qq.jpg" title="QQ" target="_blank">
+                        <i class="fa fa-qq" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="instagram">
+                    <a href="images/weixin1.png" title="微信" target="_blank">
+                        <i class="fa fa-weixin" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li class="rss">
+                    <a href="images/gongzhonghao.jpg" title="微信公众号" target="_blank">
+                        <i class="fas fa-weixin"></i>
+                    </a>
+                </li>
+            </ul>
+            <div class="tel-fax-mail">
+                <ul>
+                    <li><i class="fa fa-phone" aria-hidden="true">Tel：</i> 157-0986-1027</li>
+                    <li><i class="fa fa-envelope-o" aria-hidden="true"></i><a href="images/admin.jpg"
+                            class="__cf_email__" data-cfemail="">1163989452@qq.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="ft-bottom text-center">
+            <span>Copyright (c) 2019 All Rights <a href="https://github.com/leopingk/leopingk.github.io"><span
+                        style="font-weight: 900;color: rgb(231, 68, 68)">Reserved</span></a> </span>
+        </div>
+    </footer>
+    <script type='text/javascript' src='js/jquery.min.js'></script>
+    <script type='text/javascript' src='js/bootstrap.bundle.min.js'></script>
+    <script type='text/javascript' src='js/index.js'></script>
 </body>
 
 </html>

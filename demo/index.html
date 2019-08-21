@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		.sidebar-menu #menu .nav {
+			flex-direction: column;
+			/* overflow-y: auto; */
+			height: 600px;
+		}
+
+		.sidebar-menu #menu .nav>li {
+			flex-shrink: 0;
+		}
+
+		#btn1 {
+			position: fixed;
+			left: 220px;
+			top: 100px;
+			z-index: 13;
+			color: #3990ca;
+			cursor: pointer;
+		}
+
+		#btn2 {
+			position: fixed;
+			left: 0px;
+			top: 100px;
+			z-index: 13;
+			color: #3990ca;
+			cursor: pointer;
+		}
+
+		#head-blanks {
+			width: 240px;
+			height: 60px;
+			float: left;
+			background: #27303f;
+		}
+
+		#left-blanks {
+			width: 240px;
+			height: 100%;
+			position: absolute;
+			top: 60px;
+			background: #F8F8F8;
+		}
+
+		#left-blacks>pre> {
+			white-space: pre-wrap;
+
+		}
+
+		.bk-avatar>img {
+			transform: translate(75px)
+		}
+
+		.eyes {
+			background-image: linear-gradient(120deg, #3498db, #8e44ad);
+			position: absolute;
+			bottom: -180px;
+			width: 240px;
+			height: 180px;
+		}
+
+		.eye {
+			width: 100px;
+			height: 60px;
+			background: #c5b7b7;
+			display: inline-block;
+			margin: 60px 8px 20px 8px;
+			border-radius: 50%;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.ball {
+			width: 30px;
+			height: 30px;
+			background: #050505cb;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			border-radius: 50%;
+			border: 5px solid #746161;
+		}
+
+		/* 设想的是将iframe标签里面引入的html导入到showinner*/
+		/* #showinerr */
+		#showinner>iframe,#oldshowinner>iframe{
+			width: 90%;
+			height: 92%;
+			position: absolute;
+			left: 240px;
+			top: 60px;
+		}
+	</style>
+
+	<link rel="shortcut icon" href="assets/ico/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="iconfont/iconfont.css">
+	<!-- Vendor CSS-->
+	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css" />
+	<!-- Plugins CSS-->
+	<link rel="stylesheet" href="assets/plugins/bootkit/css/bootkit.css" />
+	<!-- Theme CSS -->
+	<!-- Page CSS -->
+	<link rel="stylesheet" href="assets/css/style.css" />
+	<link rel="stylesheet" href="css/footerstyle.css">
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="https://www.jq22.com/jquery/font-awesome.4.7.0.css">
+	<!-- end: CSS file-->
+
+	<link media="screen" rel="stylesheet" href="css/demo.css" />
+	<script type="text/javascript" src="jquery-1.7.1.min.js"></script>
+	<script type='text/javascript' src='js/topnavmenu.js'></script>
+	<script type='text/javascript'>
+		$(document).ready(function () {
+			$(".nav-parent>a").click(function () {
+				// $(this).next().height((($(this).next().children().length)*($(this).next().children().height()-'px'))+'px');
+				$(this).next().slideToggle("normal", "linear");
+				$('#showinner').hide();/* 这个是为了点击一级菜单时让showinner不再显示 */
+				$(this).parent().siblings().children("ul").slideUp();
+			});
+			$('#btn2').hide()
+			// $('.sidebar')
+			$('#btn1').click(function () {
+				$('.sidebar').animate({ width: 0 }, 500);
+
+				$(this).hide(100)
+				$('#btn2').show(700)
+			})
+			$('#btn2').click(function () {
+				$('.sidebar').animate({ width: 240 }, 500);
+				$(this).hide(100)
+				$('#btn1').show(700)
+
+			})
+			// 默认让showinner 隐藏->点击出现再点击隐藏
+			$('#showinner').show()
+			$('.nav-children>li>a').click(function () {
+				var thisName = $(this).attr('name')
+				// console.log(thisName)-->获取a标签里面的name（存着对应的src路径，将其天教导iframe中）
+				$('#showinner>iframe').attr('src', thisName)
+				$('#showinner').show(500)
+				$('#oldshowinner>iframe').hide()
+				$('#showinner>iframe').remove('src')
+			})
+			$('.navigation-down-inner>dl>dd>a').click(function () {
+				var thisName = $(this).attr('name')
+				// console.log(thisName)-->获取a标签里面的name（存着对应的src路径，将其天教导iframe中）
+				$('#showinner>iframe').attr('src', thisName)
+				$('#showinner').show(500)
+				$('#showinner>iframe').remove('src')
+			})
+		})
+	</script>
+	<script type='text/javascript'>
+		window.onload = function () {
+			var balls = document.getElementsByClassName("ball");
+			// console.log(balls)
+			document.documentElement.onmousemove = function () {
+				var x = event.clientX * 100 / window.innerWidth + "%";
+				var y = event.clientY * 100 / window.innerHeight + "%";
+				for (var i = 0; i < 2; i++) {
+					balls[i].style.left = x;
+					balls[i].style.top = y;
+					balls[i].style.transform = "translate(-" + x + ",-" + y + ")";
+				}
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<div><a id="btn1" class="iconfont icon-cebianlanshousuo"></a></div>
+	<div><a id="btn2" class="iconfont icon-cebianlandanchu"></a></div>
+	<div id="head-blanks"></div><!-- 用来填补左上角空缺 -->
+	<div id="left-blanks">
+		<pre><code>
+	西江月·且对东君痛饮
+	   [宋] 辛弃疾
+  且对东君痛饮，  莫教华发空催。
+
+  琼瑰千字已盈怀。消得津头一醉。 
+
+  休唱阳关别去，  只今凤诏归来。
+
+  五云两两望三台。已觉精神聚会。
+	</code>
+	</pre>
+		<pre><code>
+   南歌子词二首/新添声杨柳枝词
+          [宋]温庭筠
+  一尺深红胜曲尘，天生旧物不如新。
+
+  合欢桃核终堪恨，里许元来别有人。
+			
+  井底点灯深烛伊，共郎长行莫围棋。
+
+  玲珑骰子安红豆，入骨相思知不知。
+	</code></pre>
+	</div><!-- 用来填补左空缺 -->
+
+	<!-- 眼睛跟随鼠标 -->
+	<div class="eyes">
+		<div class="eye">
+			<div class="ball"></div>
+		</div>
+		<div class="eye">
+			<div class="ball"></div>
+		</div>
+		<h6 style="text-align: center;color:#bb2c49;font-weight: 700 "><!-- 为了效果最好，请刷新(按F5)后，关闭左侧菜单栏,以达到最佳效果 --></h6>
+	</div>
+	<!-- showinner区域 -->
+	<div id="oldshowinner">
+		<iframe src="work2/index.html" name="topFrame" scrolling="" noresize="noresize"frameborder="0" id="topFrame"></iframe></div>
+
+	<div id="showinner">
+		<!-- 注意scrolling="no"的时候不能滚动 -->
+		<iframe src="" name="topFrame" scrolling="" noresize="noresize" frameborder="0" id="topFrame"></iframe>
+	</div>
+
+	<!-- <navmenu -->
+	<div class="head-v3">
+		<div class="navigation-up">
+			<div class="navigation-inner">
+				<div class="navigation-v3">
+					<ul>
+						<li class="nav-up-selected-inpage" _t_nav="home">
+							<h2> <a href="#">首页</a> </h2>
+						</li>
+						<li class="" _t_nav="product">
+							<h2> <a href="#">云产品</a> </h2>
+						</li>
+						<li class="" _t_nav="wechat">
+							<h2> <a href="#">微信建站</a> </h2>
+						</li>
+						<li class="" _t_nav="solution">
+							<h2> <a href="#">行业解决方案</a> </h2>
+						</li>
+						<li class="" _t_nav="cooperate">
+							<h2> <a href="#">合作伙伴</a> </h2>
+						</li>
+						<li _t_nav="support">
+							<h2> <a href="#">帮助与支持</a> </h2>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="navigation-down">
+			<div id="product" class="nav-down-menu menu-1" style="display: none;" _t_nav="product">
+				<div class="navigation-down-inner">
+					<dl style="margin-left:10px;">
+						<dt>计算机与网络</dt>
+						<dd> <a hotrep="hp.header.product.compute1" href="#"
+								name="https://www.aliyun.com/product/ecs?utm_content=se_1002465755">云服务器</a> </dd>
+						<dd> <a hotrep="hp.header.product.compute2" href="#"
+								name="https://help.aliyun.com/product/29830.html">弹性Web引擎</a> </dd>
+					</dl>
+					<dl>
+						<dt>存储与CDN</dt>
+						<dd> <a hotrep="hp.header.product.storage1" href="#"
+								name="https://activity.huaweicloud.com/free_test/index.html?utm_source=baidu-b&utm_medium=se-cpc-op&utm_campaign=PP-%E7%AB%9E%E5%93%81&utm_content=PP-%E7%AB%9E%E5%93%81-%E8%85%BE%E8%AE%AF%E4%BA%91&utm_term=%E8%85%BE%E8%AE%AF%E4%BA%91&b_scene_zt=1&renqun_youhua=314674">云数据库</a>
+						</dd>
+						<dd> <a hotrep="hp.header.product.storage2" href="#"
+								name="https://cloud.tencent.com/act/pro/mysql?fromSource=gwzcw.2216985.2216985.2216985&utm_medium=cpc&utm_id=gwzcw.2216985.2216985.2216985">NoSQL高速存储</a>
+						</dd>
+						<dd> <a hotrep="hp.header.product.storage4" href="#"
+								name="https://www.aliyun.com/product/oss?utm_content=se_1001714693">对象存储服务(beta)</a>
+						</dd>
+						<dd> <a hotrep="hp.header.product.storage3" href="#"
+								name="https://cloud.inspur.com/activity/cdn/?&utm_source=pp&utm_medium=baidu&utm_term=CDN&ozs=13088-2755">CDN</a>
+						</dd>
+					</dl>
+					<dl>
+						<dt>监控与安全</dt>
+						<dd> <a hotrep="hp.header.product.monitoring1" href="#">云监控</a> </dd>
+						<dd> <a hotrep="hp.header.product.monitoring2" href="#">云安全</a> </dd>
+						<dd> <a hotrep="hp.header.product.monitoring3" href="#">云拨测</a> </dd>
+					</dl>
+					<dl>
+						<dt>数据分析</dt>
+						<dd> <a hotrep="hp.header.product.analysis1" href="#">腾讯云分析</a> </dd>
+						<dd> <a hotrep="hp.header.product.analysis2" href="#">关键因子</a> </dd>
+					</dl>
+					<dl>
+						<dt>开发者工具</dt>
+						<dd> <a hotrep="hp.header.product.devtool1" href="#">移动加速</a> </dd>
+						<dd> <a hotrep="hp.header.product.devtool2" href="#">应用加固</a> </dd>
+						<dd> <a hotrep="hp.header.product.devtool3" href="#">信鸽推送</a> </dd>
+					</dl>
+					<dl>
+						<dt>开发者服务</dt>
+						<dd> <a hotrep="hp.header.product.service1" href="#">安全认证服务</a> </dd>
+						<dd> <a hotrep="hp.header.product.service2" href="#">域名备案</a> </dd>
+					</dl>
+				</div>
+			</div>
+			<div id="solution" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="solution">
+				<div class="navigation-down-inner">
+					<dl style="margin-left: 380px;">
+						<dd> <a class="link" hotrep="hp.header.solution.1" href="#">微信</a> </dd>
+					</dl>
+					<dl>
+						<dd> <a class="link" hotrep="hp.header.solution.2" href="#">游戏</a> </dd>
+					</dl>
+					<dl>
+						<dd> <a class="link" hotrep="hp.header.solution.3" href="#">移动应用</a> </dd>
+					</dl>
+				</div>
+			</div>
+			<div id="support" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="support">
+				<div class="navigation-down-inner">
+					<dl style="margin-left: 610px;">
+						<dd> <a class="link" hotrep="hp.header.support.1" href="#">资料库</a> </dd>
+					</dl>
+					<dl>
+						<dd> <a class="link" hotrep="hp.header.support.2" href="#">论坛</a> </dd>
+					</dl>
+					<dl>
+						<dd> <a class="link" hotrep="hp.header.support.3" href="#">亿元扶持</a> </dd>
+					</dl>
+				</div>
+			</div>
+			<div id="cooperate" class="nav-down-menu menu-3 menu-1" style="display: none;" _t_nav="cooperate">
+				<div class="navigation-down-inner">
+					<dl style="margin-left: 480px;">
+						<dd> <a hotrep="hp.header.partner.1" href="#">代理商</a> </dd>
+					</dl>
+					<dl>
+						<dd> <a hotrep="hp.header.partner.2" href="#">微信服务商</a> </dd>
+					</dl>
+					<dl>
+						<dd> <a hotrep="hp.header.partner.3" href="#">创投机构</a> </dd>
+					</dl>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Sidebar -->
+
+	<div class="sidebar">
+		<div class="sidebar-collapse">
+			<!-- Sidebar Header Logo-->
+			<div class="sidebar-header">
+				<img src="images/logo.png" class="img-responsive" alt="" />
+			</div>
+			<!-- Sidebar Menu-->
+			<div class="sidebar-menu">
+				<nav id="menu" class="nav-main" role="navigation">
+					<ul class="nav nav-sidebar">
+						<div class="panel-body text-center">
+							<div class="bk-avatar">
+								<img src="images/admin.jpg" class="img-circle bk-img-60" alt="" />
+							</div>
+							<div class="bk-padding-top-10">
+								<i class="fa fa-circle text-success"></i> <small>Administrator</small>
+							</div>
+						</div>
+						<div class="divider2"></div>
+						<li class="active">
+							<a href="">
+								<i class="fa fa-laptop" aria-hidden="true"></i><span>Dashboard</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<span class="pull-right label label-primary">165</span>
+								<i class="fa fa-envelope" aria-hidden="true"></i><span>邮箱</span>
+							</a>
+							<ul class="nav nav-children">
+
+							</ul>
+						</li>
+						<li class="nav-parent">
+							<a>
+								<i class="fa fa-copy" aria-hidden="true"></i><span>动画&插件</span>
+							</a>
+							<ul class="nav nav-children">
+								<!-- 是指a的name属性为需要显示的html的相对路径名，点击this然后获取this的name属性，
+								动态修改到div#showinner下面的iframe的src -->
+								<li><a href="#" name="work1/index.html">1、jQuery纵向下拉菜单导航</a></li>
+								<li><a href="#" name="work2/index.html">2、一个小清新的闹钟</a></li>
+								<li><a href="#" name="work3-animation/001.html">3、彩虹扇子</a></li>
+								<li><a href="#" name="work3-animation/002.html">4、3D立方体</a></li>
+								<li><a href="#" name="work3-animation/002.html">5、3D立方体</a></li>
+							</ul>
+						</li>
+						<li class="nav-parent">
+							<a>
+								<i class="fa fa-list-alt" aria-hidden="true"></i><span>表单</span>
+							</a>
+							<ul class="nav nav-children">
+								<li><a href="#" name="work4-form/index.html">1</a></li>
+								<li><a href="#" name="">2</a></li>
+								<li><a href="#" name="">3</a></li>
+								<li><a href="#" name="">4</a></li>
+							</ul>
+						</li>
+						<li>
+						</li>
+						<li class="nav-parent">
+							<a>
+								<i class="fa fa-life-bouy" aria-hidden="true"></i><span>可视化音乐</span>
+							</a>
+							<ul class="nav nav-children">
+								<li><a href="#" name="audio-media/index.html">梁博-给我一点温度</a></li>
+							</ul>
+						</li>
+						<li class="nav-parent">
+							<a>
+								<i class="fa fa-random" aria-hidden="true"></i><span>Visual Chart</span>
+							</a>
+							<ul class="nav nav-children">
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+							</ul>
+						</li>
+						<li class="nav-parent">
+							<a>
+								<span>UI Elements</span>
+							</a>
+							<ul class="nav nav-children">
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+							</ul>
+						</li>
+						<li>
+							<a>
+								<i class="fa fa-font" aria-hidden="true"></i><span>Typography</span>
+							</a>
+						</li>
+						<li class="nav-parent">
+							<a>
+								<i class="fa fa-bolt" aria-hidden="true"></i><span>Icons</span>
+							</a>
+							<ul class="nav nav-children">
+								<li><a href="#">1</a></li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+							</ul>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-picture-o" aria-hidden="true"></i><span>相册</span>
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								<i class="fa fa-calendar" aria-hidden="true"></i><span>Calendar</span>
+							</a>
+						</li>
+
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+	<!-- End Sidebar Menu-->
+	<footer>
+		<div class="container">
+			<h6>Find & follow us</h6>
+			<ul class="icon-social">
+				<li class="facebook"><a href="#" title="脸书"><i class="fa fa-facebook"></i></a></li>
+				<li class="twitter"><a href="#" title="推特"><i class="fa fa-twitter"></i></a></li>
+				<li class="qq"><a href="images/qq.jpg" title="QQ"><i class="iconfont icon-QQ"></i></a></li>
+				<li class="wechat"><a href="images/weixin1.png" title="微信"><i class="iconfont icon-weixin"></i></a>
+				</li>
+				<li class="familychat"><a href="images/gongzhonghao.jpg"><i class="iconfont icon-weixingongzhonghao"
+							title="微信公众号"></i></a></li>
+			</ul>
+			<div class="tel-fax-mail">
+				<ul>
+					<li><span class="iconfont icon-dianhua">Tel:</span> 157-0986-1027</li>
+					<li><span class="iconfont icon-youxiang">Email:</span> <a href="images/admin.jpg"
+							class="__cf_email__" data-cfemail="">1163989452@qq.com</a></li>
+				</ul>
+			</div>
+			<div class="ft-bottom">
+				<span>Copyright (c) 2019 All Rights <a href="http://www.jq22.com/">Reserved</a> </span>
+			</div>
+		</div>
+
+	</footer>
+
+</body>
+
+</html>
